@@ -70,6 +70,51 @@
     conditionsFrame.origin.x = iconFrame.origin.x  + (iconHeight + 10);
     
     
+    UIView *header = [[UIView alloc] init];
+    header.backgroundColor = [UIColor clearColor];
+    self.tableView.tableHeaderView = header;
+    
+    
+    //this is the bottom left current temperature label
+    UILabel *temperatureLabel = [[UILabel alloc]initWithFrame:temperatureFrame];
+    temperatureLabel.backgroundColor = [UIColor clearColor];
+    temperatureLabel.textColor = [UIColor whiteColor];
+    temperatureLabel.text = @"0°";
+    temperatureLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:120];
+    [header addSubview:temperatureLabel];
+    
+    //this is the bottom left Hi / Lo temps label
+    UILabel *hiloLabel = [[UILabel alloc]initWithFrame:hiloFrame];
+    hiloLabel.backgroundColor = [UIColor clearColor];
+    hiloLabel.textColor = [UIColor whiteColor];
+    hiloLabel.text = @"0° / 0°";
+    hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
+    [header addSubview:hiloLabel];
+    
+    //this is the top city label
+    UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 30)];
+    cityLabel.backgroundColor = [UIColor clearColor];
+    cityLabel.textColor = [UIColor whiteColor];
+    cityLabel.text = @"Loading...";
+    cityLabel.font = [UIFont fontWithName: @"HelveticaNeue-Light" size:18];
+    [header addSubview:cityLabel];
+    
+    //this will also be up top
+    UILabel *conditionsLabel = [[UILabel alloc] initWithFrame:conditionsFrame];
+    conditionsLabel.backgroundColor = [UIColor clearColor];
+    conditionsLabel.textColor = [UIColor whiteColor];
+    conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    [header addSubview:conditionsLabel];
+    
+    
+    //this will show the weather icons
+    UIImageView *iconView = [[UIImageView alloc]initWithFrame:iconFrame];
+    iconView.contentMode = UIViewContentModeScaleAspectFill;
+    iconView.backgroundColor = [UIColor clearColor];
+    [header addSubview:iconView];
+    
+    
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
