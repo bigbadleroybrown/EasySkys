@@ -48,7 +48,9 @@
 		2E935F1C1961E32C00ADD2B6 /* weather-tstorm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E935F021961E32C00ADD2B6 /* weather-tstorm.png */; };
 		2E935F1D1961E32C00ADD2B6 /* weather-tstorm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E935F031961E32C00ADD2B6 /* weather-tstorm@2x.png */; };
 		2E935F221962011800ADD2B6 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E935F211962011800ADD2B6 /* APIClient.m */; };
-		2E935F25196201D500ADD2B6 /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E935F24196201D500ADD2B6 /* WeatherManager.m */; };
+		2EE4955F19620E35006FA552 /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4955E19620E35006FA552 /* WeatherManager.m */; };
+		2EE4956219620E57006FA552 /* Conditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4956119620E57006FA552 /* Conditions.m */; };
+		2EE4956519620F1B006FA552 /* DailyForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4956419620F1B006FA552 /* DailyForecast.m */; };
 		8A3CED3CC4D9461F94822099 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2DD4357EB3040D29D4F9D1A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -110,8 +112,12 @@
 		2E935F031961E32C00ADD2B6 /* weather-tstorm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-tstorm@2x.png"; sourceTree = "<group>"; };
 		2E935F201962011800ADD2B6 /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		2E935F211962011800ADD2B6 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
-		2E935F23196201D500ADD2B6 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
-		2E935F24196201D500ADD2B6 /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
+		2EE4955D19620E35006FA552 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
+		2EE4955E19620E35006FA552 /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
+		2EE4956019620E57006FA552 /* Conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conditions.h; sourceTree = "<group>"; };
+		2EE4956119620E57006FA552 /* Conditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conditions.m; sourceTree = "<group>"; };
+		2EE4956319620F1B006FA552 /* DailyForecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyForecast.h; sourceTree = "<group>"; };
+		2EE4956419620F1B006FA552 /* DailyForecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyForecast.m; sourceTree = "<group>"; };
 		A2DD4357EB3040D29D4F9D1A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F924E7F0153445B38780F450 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -263,10 +269,14 @@
 		2EE5D152196204C600738A40 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2EE4955D19620E35006FA552 /* WeatherManager.h */,
+				2EE4955E19620E35006FA552 /* WeatherManager.m */,
 				2E935F201962011800ADD2B6 /* APIClient.h */,
 				2E935F211962011800ADD2B6 /* APIClient.m */,
-				2E935F23196201D500ADD2B6 /* WeatherManager.h */,
-				2E935F24196201D500ADD2B6 /* WeatherManager.m */,
+				2EE4956019620E57006FA552 /* Conditions.h */,
+				2EE4956119620E57006FA552 /* Conditions.m */,
+				2EE4956319620F1B006FA552 /* DailyForecast.h */,
+				2EE4956419620F1B006FA552 /* DailyForecast.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -432,8 +442,10 @@
 				2E935EC71961D76700ADD2B6 /* ViewController.m in Sources */,
 				2E935EC11961D76700ADD2B6 /* AppDelegate.m in Sources */,
 				2E935EBD1961D76700ADD2B6 /* main.m in Sources */,
+				2EE4956519620F1B006FA552 /* DailyForecast.m in Sources */,
 				2E935F221962011800ADD2B6 /* APIClient.m in Sources */,
-				2E935F25196201D500ADD2B6 /* WeatherManager.m in Sources */,
+				2EE4955F19620E35006FA552 /* WeatherManager.m in Sources */,
+				2EE4956219620E57006FA552 /* Conditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
