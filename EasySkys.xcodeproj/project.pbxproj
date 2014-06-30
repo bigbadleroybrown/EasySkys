@@ -183,19 +183,12 @@
 		2E935EB61961D76700ADD2B6 /* EasySkys */ = {
 			isa = PBXGroup;
 			children = (
+				2EE5D152196204C600738A40 /* Models */,
 				2E935EBF1961D76700ADD2B6 /* AppDelegate.h */,
 				2E935EC01961D76700ADD2B6 /* AppDelegate.m */,
 				2E935EC21961D76700ADD2B6 /* Main.storyboard */,
 				2E935EC51961D76700ADD2B6 /* ViewController.h */,
 				2E935EC61961D76700ADD2B6 /* ViewController.m */,
-				2E935F201962011800ADD2B6 /* APIClient.h */,
-				2E935F211962011800ADD2B6 /* APIClient.m */,
-				2E935F23196201D500ADD2B6 /* WeatherManager.h */,
-				2E935F24196201D500ADD2B6 /* WeatherManager.m */,
-				2E935F26196201F600ADD2B6 /* Conditions.h */,
-				2E935F291962022200ADD2B6 /* DailyForecast.h */,
-				2E935F2A1962022200ADD2B6 /* DailyForecast.m */,
-				2E935F27196201F600ADD2B6 /* Conditions.m */,
 				2E935EC81961D76700ADD2B6 /* Images.xcassets */,
 				2E935EB71961D76700ADD2B6 /* Supporting Files */,
 			);
@@ -271,6 +264,21 @@
 				2E935F031961E32C00ADD2B6 /* weather-tstorm@2x.png */,
 			);
 			path = "Weather Icons";
+			sourceTree = "<group>";
+		};
+		2EE5D152196204C600738A40 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2E935F201962011800ADD2B6 /* APIClient.h */,
+				2E935F211962011800ADD2B6 /* APIClient.m */,
+				2E935F23196201D500ADD2B6 /* WeatherManager.h */,
+				2E935F24196201D500ADD2B6 /* WeatherManager.m */,
+				2E935F291962022200ADD2B6 /* DailyForecast.h */,
+				2E935F2A1962022200ADD2B6 /* DailyForecast.m */,
+				2E935F26196201F600ADD2B6 /* Conditions.h */,
+				2E935F27196201F600ADD2B6 /* Conditions.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
