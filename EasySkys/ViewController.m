@@ -28,7 +28,7 @@
     self.screenHeight = [UIScreen mainScreen].bounds.size.height;
     UIImage *background = [UIImage imageNamed:@"nycSmallbg"];
     
-    self.backgroundImageView = [[UIImageView alloc]init];
+    self.backgroundImageView = [[UIImageView alloc]initWithImage:background];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:self.backgroundImageView];
     
@@ -45,6 +45,30 @@
     self.tableView.separatorColor = [UIColor colorWithWhite:1 alpha:0.2];
     self.tableView.pagingEnabled = YES;
     [self.view addSubview:self.tableView];
+    
+    //Frames and Margins
+    
+    
+    //makes header of table the same size as screen
+    CGRect headFrame = [UIScreen mainScreen].bounds;
+    
+    CGFloat inset = 20;
+    
+    //these are the 3 views being initialized - will need to make them more fluid, constants are not good
+    CGFloat temperatureHeight = 110;
+    CGFloat hiloHeight = 40;
+    CGFloat iconHeight = 30;
+    
+    CGRect hiloFrame = CGRectMake(inset, headFrame.size.height - hiloHeight, headFrame.size.width - (2 * inset), hiloHeight);
+    
+    CGRect temperatureFrame = CGRectMake(inset, headFrame.size.height - (temperatureHeight + hiloHeight), headFrame.size.width - (2 * inset), temperatureHeight);
+    
+    CGRect iconFrame = CGRectMake(inset, temperatureFrame.origin.y - iconHeight, iconHeight, iconHeight);
+    
+    CGRect conditionsFrame = iconFrame;
+    conditionsFrame.size.width = self.view.bounds.size.width - (((2 * inset) +iconHeight) +10);
+    conditionsFrame.origin.x = iconFrame.origin.x  + (iconHeight + 10);
+    
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -100,6 +124,17 @@
     
 }
 
+-(void)viewWillLayoutSubviews
+
+{
+    
+    [super viewWillLayoutSubviews];
+    CGRect bounds = self.view.bounds;
+    self.backgroundImageView.frame = bounds;
+    self.blurredImageView.frame = bounds;
+    self.tableView.frame = bounds;
+    
+}
 
 
 
