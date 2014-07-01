@@ -64,11 +64,14 @@
     
     CGRect temperatureFrame = CGRectMake(inset, headFrame.size.height - (temperatureHeight + hiloHeight), headFrame.size.width - (2 * inset), temperatureHeight);
     
-    CGRect iconFrame = CGRectMake(inset, temperatureFrame.origin.y - iconHeight, iconHeight, iconHeight);
+    CGRect iconFrame = CGRectMake(inset,
+                                  temperatureFrame.origin.y - iconHeight,
+                                  iconHeight,
+                                  iconHeight);
     
     CGRect conditionsFrame = iconFrame;
-    conditionsFrame.size.width = self.view.bounds.size.width - (((2 * inset) +iconHeight) +10);
-    conditionsFrame.origin.x = iconFrame.origin.x  + (iconHeight + 10);
+    conditionsFrame.size.width = self.view.bounds.size.width - (((2 * inset) + iconHeight) + 10);
+    conditionsFrame.origin.x = iconFrame.origin.x + (iconHeight + 10);
     
     
     UIView *header = [[UIView alloc] init];
@@ -116,7 +119,7 @@
     [header addSubview:iconView];
 
     
-    [[RACObserve([WeatherManager sharedManager], updateCurrentConditions)
+    [[RACObserve([WeatherManager sharedManager], currentCondition)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(Conditions *newCondition) {
          temperatureLabel.text = [NSString stringWithFormat:@"%.0f°",newCondition.temperature.floatValue];

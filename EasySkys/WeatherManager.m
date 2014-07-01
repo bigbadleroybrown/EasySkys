@@ -12,14 +12,14 @@
 
 @interface WeatherManager ()
 
-@property (strong, nonatomic, readwrite) Conditions *updateCurrentConditions;
-@property (strong, nonatomic, readwrite) CLLocation *currentLocation;
-@property (strong, nonatomic, readwrite) NSArray *updateHourlyForecast;
-@property (strong, nonatomic, readwrite) NSArray *updateDailyForecast;
+@property (nonatomic, strong, readwrite) Conditions *currentCondition;
+@property (nonatomic, strong, readwrite) CLLocation *currentLocation;
+@property (nonatomic, strong, readwrite) NSArray *hourlyForecast;
+@property (nonatomic, strong, readwrite) NSArray *dailyForecast;
 
-@property (strong, nonatomic) CLLocationManager *manager;
-@property (nonatomic, assign) BOOL *isFirstUpdate;
-@property (strong, nonatomic) APIClient *client;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, assign) BOOL isFirstUpdate;
+@property (nonatomic, strong) APIClient *client;
 
 @end
 
@@ -63,8 +63,8 @@
 -(id)init {
     if (self = [super init]) {
         
-        _manager = [[CLLocationManager alloc] init];
-        _manager.delegate = self;
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
         
         _client = [[APIClient alloc] init];
         
@@ -83,7 +83,7 @@
 
          subscribeError:^(NSError *error) {
              [TSMessage showNotificationWithTitle:@"Error"
-                                         subtitle:@"There was a problem fetching the latest weather."
+                                         subtitle:@"There was a problem downloading the current weather, please try again."
                                              type:TSMessageNotificationTypeError];
          }];
     }
@@ -94,7 +94,7 @@
 {
     
     self.isFirstUpdate = YES;
-    [self.manager startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
     
 }
 
@@ -111,7 +111,7 @@
     
     if (location.horizontalAccuracy > 0) {
         self.currentLocation = location;
-        [self.manager stopUpdatingLocation];
+        [self.locationManager stopUpdatingLocation];
     }
 }
 
@@ -120,7 +120,7 @@
     
     return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate]
             doNext:^(Conditions *condition) {
-                self.updateCurrentConditions = condition;
+                self.currentCondition = condition;
             }];
 }
 
@@ -130,7 +130,7 @@
     
     return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate]
             doNext:^(NSArray *conditions) {
-                self.updateHourlyForecast = conditions;
+                self.hourlyForecast = conditions;
             }];
 }
 
@@ -139,7 +139,7 @@
     
     return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate]
             doNext:^(NSArray *conditions) {
-                self.updateDailyForecast = conditions;
+                self.dailyForecast = conditions;
             }];
 
 }

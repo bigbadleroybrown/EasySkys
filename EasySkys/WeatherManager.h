@@ -17,12 +17,12 @@
 
 +(instancetype)sharedManager;
 
-@property (strong, nonatomic, readonly) CLLocation *currentLocation;
-@property (strong, nonatomic, readonly) Conditions *updateCurrentConditions;
-@property (strong, nonatomic, readonly) NSArray *updateHourlyForecast;
-@property (strong, nonatomic, readonly) NSArray *updateDailyForecast;
+@property (nonatomic, strong, readonly) CLLocation *currentLocation;
+@property (nonatomic, strong, readonly) Conditions *currentCondition;
+@property (nonatomic, strong, readonly) NSArray *hourlyForecast;
+@property (nonatomic, strong, readonly) NSArray *dailyForecast;
 
-//will refresh the location or current weather
+
 -(void)findCurrentLocation;
 
 @end
