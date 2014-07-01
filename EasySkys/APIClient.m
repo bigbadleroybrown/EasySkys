@@ -80,6 +80,7 @@
     
     return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
         //turns JSON into a Conditions object
+        NSLog(@"%@", json);
         return [MTLJSONAdapter modelOfClass:[Conditions class] fromJSONDictionary:json error:nil];
     }];
     

@@ -37,27 +37,57 @@
 }
 
 
+//-(id)init {
+//    if (self = [super init]){
+//        _manager = [[CLLocationManager alloc]init];
+//        _manager.delegate = self;
+//        _client = [[APIClient alloc] init];
+//        
+//        [[[[RACObserve(self, currentLocation)
+//            ignore:nil]
+//           
+//           flattenMap:^(CLLocation *newLocation) {
+//               return [RACSignal merge:@[[self updateCurrentConditions],
+//                                         [self updateDailyForecast],
+//                                         [self updateHourlyForecast]
+//                                         ]];
+//           }] deliverOn:RACScheduler.mainThreadScheduler]
+//         
+//         subscribeError:^(NSError *error) {
+//             [TSMessage showNotificationWithTitle:@"Error" subtitle:@"There was an error retrieving the current weather, please try again" type:TSMessageNotificationTypeError];
+//         }];
+//    }
+//    return  self;
+//}
+
 -(id)init {
-    if (self = [super init]){
-        _manager = [[CLLocationManager alloc]init];
+    if (self = [super init]) {
+        
+        _manager = [[CLLocationManager alloc] init];
         _manager.delegate = self;
+        
         _client = [[APIClient alloc] init];
         
         [[[[RACObserve(self, currentLocation)
+
             ignore:nil]
-           
+
            flattenMap:^(CLLocation *newLocation) {
-               return [RACSignal merge:@[[self updateCurrentConditions],
+               return [RACSignal merge:@[
+                                         [self updateCurrentConditions],
                                          [self updateDailyForecast],
                                          [self updateHourlyForecast]
                                          ]];
+
            }] deliverOn:RACScheduler.mainThreadScheduler]
-         
+
          subscribeError:^(NSError *error) {
-             [TSMessage showNotificationWithTitle:@"Error" subtitle:@"There was an error retrieving the current weather, please try again" type:TSMessageNotificationTypeError];
+             [TSMessage showNotificationWithTitle:@"Error"
+                                         subtitle:@"There was a problem fetching the latest weather."
+                                             type:TSMessageNotificationTypeError];
          }];
     }
-    return  self;
+    return self;
 }
 
 -(void)findCurrentLocation

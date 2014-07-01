@@ -54,16 +54,16 @@
              @"date": @"dt",
              @"locationName": @"name",
              @"humidity": @"main.humidity",
-             @"temperature": @"main.temperature",
-             @"highTemp": @"main.temp_max",
-             @"lowTemp": @"main.temp_min",
+             @"temperature": @"main.temp",
+             @"tempHigh": @"main.temp_max",
+             @"tempLow": @"main.temp_min",
              @"sunrise": @"sys.sunrise",
              @"sunset": @"sys.sunset",
              @"conditionDescription": @"weather.description",
              @"condition": @"weather.main",
              @"icon": @"weather.icon",
-             @"windSpeed": @"wind.speed",
-             @"windBearing": @"wind.deg"
+             @"windBearing": @"wind.deg",
+             @"windSpeed": @"wind.speed"
              };
 }
 

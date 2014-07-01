@@ -104,21 +104,22 @@
     //this will also be up top
     UILabel *conditionsLabel = [[UILabel alloc] initWithFrame:conditionsFrame];
     conditionsLabel.backgroundColor = [UIColor clearColor];
-    conditionsLabel.textColor = [UIColor whiteColor];
     conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    conditionsLabel.textColor = [UIColor whiteColor];
     [header addSubview:conditionsLabel];
     
     
     //this will show the weather icons
-    UIImageView *iconView = [[UIImageView alloc]initWithFrame:iconFrame];
-    iconView.contentMode = UIViewContentModeScaleAspectFill;
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:iconFrame];
+    iconView.contentMode = UIViewContentModeScaleAspectFit;
     iconView.backgroundColor = [UIColor clearColor];
     [header addSubview:iconView];
 
-    [[RACObserve([WeatherManager sharedManager], currentConditions)
+    
+    [[RACObserve([WeatherManager sharedManager], updateCurrentConditions)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(Conditions *newCondition) {
-         temperatureLabel.text = [NSString stringWithFormat:@"%.0f°", newCondition.temperature.floatValue];
+         temperatureLabel.text = [NSString stringWithFormat:@"%.0f°",newCondition.temperature.floatValue];
          conditionsLabel.text = [newCondition.condition capitalizedString];
          cityLabel.text = [newCondition.locationName capitalizedString];
          
