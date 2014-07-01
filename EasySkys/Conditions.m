@@ -114,7 +114,7 @@
 +(NSValueTransformer *)iconJSONTransformer
 {
     
-    return [self iconJSONTransformer];
+    return [self conditionDescriptionJSONTransformer];
     
 }
 

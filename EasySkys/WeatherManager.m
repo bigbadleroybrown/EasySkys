@@ -85,5 +85,35 @@
     }
 }
 
+-(RACSignal *)updateCurrentConditions
+{
+    
+    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate]
+            doNext:^(Conditions *condition) {
+                self.updateCurrentConditions = condition;
+            }];
+}
+
+
+-(RACSignal *)updateHourlyForecast
+{
+    
+    return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate]
+            doNext:^(NSArray *conditions) {
+                self.updateHourlyForecast = conditions;
+            }];
+}
+
+-(RACSignal *)updateDailyForecast
+{
+    
+    return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate]
+            doNext:^(NSArray *conditions) {
+                self.updateDailyForecast = conditions;
+            }];
+
+}
+
+
 
 @end

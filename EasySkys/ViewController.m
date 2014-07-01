@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <LBBlurredImage/UIImageView+LBBlurredImage.h>
+#import "WeatherManager.h"
 
 @interface ViewController ()
 
@@ -26,7 +27,7 @@
     [super viewDidLoad];
     
     self.screenHeight = [UIScreen mainScreen].bounds.size.height;
-    UIImage *background = [UIImage imageNamed:@"nycSmallbg"];
+    UIImage *background = [UIImage imageNamed:@"nycbg@2x"];
     
     self.backgroundImageView = [[UIImageView alloc]initWithImage:background];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -113,6 +114,18 @@
     iconView.contentMode = UIViewContentModeScaleAspectFill;
     iconView.backgroundColor = [UIColor clearColor];
     [header addSubview:iconView];
+
+    [[RACObserve([WeatherManager sharedManager], currentConditions)
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(Conditions *newCondition) {
+         temperatureLabel.text = [NSString stringWithFormat:@"%.0f°", newCondition.temperature.floatValue];
+         conditionsLabel.text = [newCondition.condition capitalizedString];
+         cityLabel.text = [newCondition.locationName capitalizedString];
+         
+         iconView.image = [UIImage imageNamed:[newCondition imageName]];
+     }];
+    
+    [[WeatherManager sharedManager] findCurrentLocation];
     
     
     
