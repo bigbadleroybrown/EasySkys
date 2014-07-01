@@ -35,10 +35,29 @@
     NSLog(@"Fetching: %@", url.absoluteString);
     
     return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+       //making the NSURLSession to fetch data from Weather URL
         NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            //TODO handle retrieved data
+            if (! error) {
+                NSError *jsonError = nil;
+                id json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+                if (! jsonError) {
+
+                    [subscriber sendNext:json];
+                }
+                else {
+
+                    [subscriber sendError:jsonError];
+                }
+            }
+            else {
+
+                [subscriber sendError:error];
+            }
+            
+
+            [subscriber sendCompleted];
         }];
-        
+        // starting network
         [dataTask resume];
         
         return [RACDisposable disposableWithBlock:^{
@@ -51,5 +70,56 @@
     }];
     
 }
+
+
+-(RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate
+{
+    //gets the object longitude and latitude
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=imperial", coordinate.latitude, coordinate.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
+        //turns JSON into a Conditions object
+        return [MTLJSONAdapter modelOfClass:[Conditions class] fromJSONDictionary:json error:nil];
+    }];
+    
+}
+
+
+-(RACSignal *)fetchHourlyForecastForLocation:(CLLocationCoordinate2D)coordinate
+{
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&units=imperial&cnt=12", coordinate.latitude, coordinate.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
+        RACSequence *list = [json[@"list"] rac_sequence];
+    
+        return [[list map:^(NSDictionary *item) {
+            //JSON into Conditions object
+            return [MTLJSONAdapter modelOfClass:[Conditions class] fromJSONDictionary:item error:nil];
+        }]array];
+    }];
+}
+// @"http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&units=imperial&cnt=7"
+
+//exact same call as above with different URL
+-(RACSignal *)fetchDailyForecastForLocation:(CLLocationCoordinate2D)coordinate
+{
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&units=imperial&cnt=7", coordinate.latitude, coordinate.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
+        RACSequence *list = [json[@"list"] rac_sequence];
+        
+        return [[list map:^(NSDictionary *item) {
+            return [MTLJSONAdapter modelOfClass:[DailyForecast class] fromJSONDictionary:item error:nil];
+        }]array];
+    }];
+}
+
+
+
 
 @end

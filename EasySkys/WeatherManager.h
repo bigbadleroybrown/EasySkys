@@ -10,4 +10,6 @@
 
 @interface WeatherManager : NSObject
 
+
+
 @end
