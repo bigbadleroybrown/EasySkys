@@ -51,7 +51,7 @@
     
     
     //makes header of table the same size as screen
-    CGRect headFrame = [UIScreen mainScreen].bounds;
+    CGRect headerFrame = [UIScreen mainScreen].bounds;
     
     CGFloat inset = 20;
     
@@ -60,27 +60,24 @@
     CGFloat hiloHeight = 40;
     CGFloat iconHeight = 30;
     
-    CGRect hiloFrame = CGRectMake(inset, headFrame.size.height - hiloHeight, headFrame.size.width - (2 * inset), hiloHeight);
+    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height - hiloHeight, headerFrame.size.width - 2*inset, hiloHeight);;
     
-    CGRect temperatureFrame = CGRectMake(inset, headFrame.size.height - (temperatureHeight + hiloHeight), headFrame.size.width - (2 * inset), temperatureHeight);
+    CGRect temperatureFrame = CGRectMake(inset, headerFrame.size.height - temperatureHeight - hiloHeight, headerFrame.size.width - 2*inset, temperatureHeight);
     
-    CGRect iconFrame = CGRectMake(inset,
-                                  temperatureFrame.origin.y - iconHeight,
-                                  iconHeight,
-                                  iconHeight);
+    CGRect iconFrame = CGRectMake(inset, temperatureFrame.origin.y - iconHeight, iconHeight, iconHeight);
     
     CGRect conditionsFrame = iconFrame;
-    conditionsFrame.size.width = self.view.bounds.size.width - (((2 * inset) + iconHeight) + 10);
-    conditionsFrame.origin.x = iconFrame.origin.x + (iconHeight + 10);
+    conditionsFrame.size.width = self.view.bounds.size.width - 2*inset - iconHeight - 10;
+    conditionsFrame.origin.x = iconFrame.origin.x + iconHeight + 10;
     
     
-    UIView *header = [[UIView alloc] init];
+    UIView *header = [[UIView alloc] initWithFrame:headerFrame];
     header.backgroundColor = [UIColor clearColor];
     self.tableView.tableHeaderView = header;
     
     
     //this is the bottom left current temperature label
-    UILabel *temperatureLabel = [[UILabel alloc]initWithFrame:temperatureFrame];
+    UILabel *temperatureLabel = [[UILabel alloc] initWithFrame:temperatureFrame];
     temperatureLabel.backgroundColor = [UIColor clearColor];
     temperatureLabel.textColor = [UIColor whiteColor];
     temperatureLabel.text = @"0°";
@@ -88,7 +85,7 @@
     [header addSubview:temperatureLabel];
     
     //this is the bottom left Hi / Lo temps label
-    UILabel *hiloLabel = [[UILabel alloc]initWithFrame:hiloFrame];
+    UILabel *hiloLabel = [[UILabel alloc] initWithFrame:hiloFrame];
     hiloLabel.backgroundColor = [UIColor clearColor];
     hiloLabel.textColor = [UIColor whiteColor];
     hiloLabel.text = @"0° / 0°";
@@ -100,7 +97,7 @@
     cityLabel.backgroundColor = [UIColor clearColor];
     cityLabel.textColor = [UIColor whiteColor];
     cityLabel.text = @"Loading...";
-    cityLabel.font = [UIFont fontWithName: @"HelveticaNeue-Light" size:18];
+    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
     cityLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:cityLabel];
     
@@ -119,15 +116,27 @@
     [header addSubview:iconView];
 
     
+
     [[RACObserve([WeatherManager sharedManager], currentCondition)
+
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(Conditions *newCondition) {
+
          temperatureLabel.text = [NSString stringWithFormat:@"%.0f°",newCondition.temperature.floatValue];
+         NSLog(@"%@", temperatureLabel.text);
          conditionsLabel.text = [newCondition.condition capitalizedString];
          cityLabel.text = [newCondition.locationName capitalizedString];
-         
          iconView.image = [UIImage imageNamed:[newCondition imageName]];
      }];
+    
+    RAC(hiloLabel, text) = [[RACSignal combineLatest:@[
+                                                       
+        RACObserve([WeatherManager sharedManager], currentCondition.tempHigh),
+        RACObserve([WeatherManager sharedManager], currentCondition.tempLow)]
+                reduce:^(NSNumber *hi, NSNumber *low) {
+                    return [NSString  stringWithFormat:@"%.0f° / %.0f°",hi.floatValue,low.floatValue];
+                }]
+                deliverOn:RACScheduler.mainThreadScheduler];
     
     [[WeatherManager sharedManager] findCurrentLocation];
     

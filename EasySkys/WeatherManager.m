@@ -26,14 +26,14 @@
 @implementation WeatherManager
 
 
-+(instancetype)sharedManager {
++ (instancetype)sharedManager {
     static id _sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedManager = [[self alloc]init];
+        _sharedManager = [[self alloc] init];
     });
-        
-        return _sharedManager;
+    
+    return _sharedManager;
 }
 
 
@@ -60,14 +60,16 @@
 //    return  self;
 //}
 
--(id)init {
+- (id)init {
     if (self = [super init]) {
-        
+
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         
+
         _client = [[APIClient alloc] init];
         
+
         [[[[RACObserve(self, currentLocation)
 
             ignore:nil]
@@ -80,28 +82,22 @@
                                          ]];
 
            }] deliverOn:RACScheduler.mainThreadScheduler]
-
          subscribeError:^(NSError *error) {
              [TSMessage showNotificationWithTitle:@"Error"
-                                         subtitle:@"There was a problem downloading the current weather, please try again."
+                                         subtitle:@"There was an error retrieving the current weather, please try again"
                                              type:TSMessageNotificationTypeError];
          }];
     }
     return self;
 }
 
--(void)findCurrentLocation
-{
-    
+- (void)findCurrentLocation {
     self.isFirstUpdate = YES;
     [self.locationManager startUpdatingLocation];
-    
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    
     if (self.isFirstUpdate) {
         self.isFirstUpdate = NO;
         return;
@@ -109,39 +105,30 @@
     
     CLLocation *location = [locations lastObject];
     
+
     if (location.horizontalAccuracy > 0) {
+        // 3
         self.currentLocation = location;
         [self.locationManager stopUpdatingLocation];
     }
 }
 
--(RACSignal *)updateCurrentConditions
-{
-    
-    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate]
-            doNext:^(Conditions *condition) {
-                self.currentCondition = condition;
-            }];
+- (RACSignal *)updateCurrentConditions {
+    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(Conditions *condition) {
+        self.currentCondition = condition;
+    }];
 }
 
-
--(RACSignal *)updateHourlyForecast
-{
-    
-    return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate]
-            doNext:^(NSArray *conditions) {
-                self.hourlyForecast = conditions;
-            }];
+- (RACSignal *)updateHourlyForecast {
+    return [[self.client fetchHourlyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+        self.hourlyForecast = conditions;
+    }];
 }
 
--(RACSignal *)updateDailyForecast
-{
-    
-    return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate]
-            doNext:^(NSArray *conditions) {
-                self.dailyForecast = conditions;
-            }];
-
+- (RACSignal *)updateDailyForecast {
+    return [[self.client fetchDailyForecastForLocation:self.currentLocation.coordinate] doNext:^(NSArray *conditions) {
+        self.dailyForecast = conditions;
+    }];
 }
 
 

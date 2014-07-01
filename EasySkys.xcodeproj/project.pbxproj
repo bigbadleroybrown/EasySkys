@@ -231,7 +231,7 @@
 		2E935EE81961E32C00ADD2B6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				2E93FE9B19631E6E0057C4CD /* weather icons */,
+				2E93FE9B19631E6E0057C4CD /* Weather Icons */,
 				2E935EE91961E32C00ADD2B6 /* nycbg@2x.png */,
 				2E935EEA1961E32C00ADD2B6 /* nycSmallbg.png */,
 			);
@@ -239,7 +239,7 @@
 			path = EasySkys/Images;
 			sourceTree = "<group>";
 		};
-		2E93FE9B19631E6E0057C4CD /* weather icons */ = {
+		2E93FE9B19631E6E0057C4CD /* Weather Icons */ = {
 			isa = PBXGroup;
 			children = (
 				2E93FE6B19631AAF0057C4CD /* weather-broken.png */,
@@ -267,7 +267,7 @@
 				2E93FE8119631AAF0057C4CD /* weather-tstorm.png */,
 				2E93FE8219631AAF0057C4CD /* weather-tstorm@2x.png */,
 			);
-			name = "weather icons";
+			name = "Weather Icons";
 			sourceTree = "<group>";
 		};
 		2EE5D152196204C600738A40 /* Models */ = {
