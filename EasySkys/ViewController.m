@@ -16,11 +16,24 @@
 @property (strong, nonatomic) UIImageView *blurredImageView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) CGFloat screenHeight;
-
+@property (strong, nonatomic) NSDateFormatter *hourFormatter;
+@property (strong, nonatomic) NSDateFormatter *dayFormatter;
 
 @end
 
 @implementation ViewController
+
+-(id)init
+{
+  //initialize date formatter only once
+    if (self = [super init]) {
+        _hourFormatter = [[NSDateFormatter alloc]init];
+        _hourFormatter.dateFormat = @"h a";
+        _dayFormatter = [[NSDateFormatter alloc]init];
+        _dayFormatter.dateFormat = @"EEEE";
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -157,6 +170,7 @@
 
 {
     //Will eventually return forecast
+    
     return 2;
     
 }
@@ -164,8 +178,11 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 
 {
+    if (section ==0) {
+        return MIN([[WeatherManager sharedManager].hourlyForecast count],6) +1;
     
-    return 0;
+    }
+    return MIN([[WeatherManager sharedManager].dailyForecast count],6) +1;
     
 }
 
@@ -184,7 +201,26 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     
-    return cell;
+    if (indexPath.section ==0) {
+        if (indexPath.row ==0) {
+            [self configureHeaderCell:cell title:@"Hourly Forecast"];
+        }
+        else {
+            Conditions *weather = [WeatherManager sharedManager].hourlyForecast[indexPath.row -1];
+            [self configureHourlyCell:cell weather:weather];
+        }
+    }
+    
+    else if (indexPath.section ==1) {
+        if (indexPath.row ==0) {
+            [self configureHeaderCell:cell title:@"Daily Forecast"];
+        }
+        else {
+            Conditions *weather = [WeatherManager sharedManager].dailyForecast[indexPath.row -1];
+            [self configureDailyCell:cell weather:weather];
+        }
+    }
+    
     
 }
 
