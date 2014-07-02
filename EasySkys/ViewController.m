@@ -151,6 +151,18 @@
                 }]
                 deliverOn:RACScheduler.mainThreadScheduler];
     
+    [[RACObserve([WeatherManager sharedManager], hourlyForecast)
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(NSArray *newForecast) {
+         [self.tableView reloadData];
+     }];
+    
+    [[RACObserve([WeatherManager sharedManager], dailyForecast)
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(NSArray *newForecast) {
+         [self.tableView reloadData];
+     }];
+    
     [[WeatherManager sharedManager] findCurrentLocation];
     
     
@@ -221,6 +233,38 @@
         }
     }
     
+    return cell;
+}
+
+- (void)configureHeaderCell:(UITableViewCell *)cell title:(NSString *)title
+{
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
+    cell.textLabel.text = title;
+    cell.detailTextLabel.text = @"";
+    cell.imageView.image = nil;
+}
+
+-(void)configureHourlyCell:(UITableViewCell *)cell weather:(Conditions *)weather
+{
+
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium"  size:18];
+    cell.textLabel.text = [self.hourFormatter stringFromDate:weather.date];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f°", weather.temperature.floatValue];
+    cell.imageView.image = [UIImage imageNamed:[weather imageName]];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+
+}
+
+-(void)configureDailyCell:(UITableViewCell *)cell weather:(Conditions *)weather
+{
+    
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium"  size:18];
+    cell.textLabel.text = [self.dayFormatter stringFromDate:weather.date];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f° / %.0f°", weather.tempHigh.floatValue, weather.tempLow.floatValue];
+    cell.imageView.image = [UIImage imageNamed:[weather imageName]];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
 }
 
@@ -228,9 +272,13 @@
 
 {
     //Determine how big cell is based on screen
-    return 44;
+    
+    NSInteger cellCount = [self tableView:tableView numberOfRowsInSection:indexPath.section];
+    
+    return self.screenHeight / (CGFloat)cellCount;
     
 }
+
 
 -(void)viewWillLayoutSubviews
 
@@ -243,6 +291,21 @@
     self.tableView.frame = bounds;
     
 }
+
+
+//blur effect
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+
+{
+    
+    CGFloat height = scrollView.bounds.size.height;
+    CGFloat position = MAX(scrollView.contentOffset.y, 0.0);
+    CGFloat percent = MIN(position / height, 1.0);
+    self.blurredImageView.alpha = percent;
+    
+}
+
 
 
 

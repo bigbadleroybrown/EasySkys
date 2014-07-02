@@ -70,22 +70,27 @@
     }];
 }
 
+
+
 - (RACSignal *)fetchDailyForecastForLocation:(CLLocationCoordinate2D)coordinate {
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&units=imperial&cnt=7",coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
     
-    // Use the generic fetch method and map results to convert into an array of Mantle objects
+
     return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
-        // Build a sequence from the list of raw JSON
+
         RACSequence *list = [json[@"list"] rac_sequence];
         
-        // Use a function to map results from JSON to Mantle objects
+
         return [[list map:^(NSDictionary *item) {
             return [MTLJSONAdapter modelOfClass:[DailyForecast class] fromJSONDictionary:item error:nil];
         }] array];
     }];
 }
 
+
+
+//exact same call as above with different URL
 - (RACSignal *)fetchHourlyForecastForLocation:(CLLocationCoordinate2D)coordinate {
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&units=imperial&cnt=12",coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -100,19 +105,6 @@
 }
 
 
-//-(RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate
-//{
-//    //gets the object longitude and latitude
-//    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=imperial", coordinate.latitude, coordinate.longitude];
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    
-//    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
-//        //turns JSON into a Conditions object
-//        NSLog(@"%@", json);
-//        return [MTLJSONAdapter modelOfClass:[Conditions class] fromJSONDictionary:json error:nil];
-//    }];
-//    
-//}
 
 
 
@@ -152,7 +144,7 @@
 //}
 
 
-//exact same call as above with different URL
+
 
 
 
