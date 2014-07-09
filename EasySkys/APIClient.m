@@ -72,16 +72,17 @@
 
 
 
+
 - (RACSignal *)fetchDailyForecastForLocation:(CLLocationCoordinate2D)coordinate {
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&units=imperial&cnt=7",coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
     
-
     return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
-
+    
         RACSequence *list = [json[@"list"] rac_sequence];
         
-
+        //NSLog(@"%@", json);
+    
         return [[list map:^(NSDictionary *item) {
             return [MTLJSONAdapter modelOfClass:[DailyForecast class] fromJSONDictionary:item error:nil];
         }] array];

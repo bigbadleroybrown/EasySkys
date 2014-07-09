@@ -163,12 +163,31 @@
          [self.tableView reloadData];
      }];
     
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]init];
+    [refreshControl addTarget:self action:@selector(refreshControl:) forControlEvents:UIControlEventValueChanged];
+    
+        
+    
     [[WeatherManager sharedManager] findCurrentLocation];
     
     
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
+
+-(void)refresh:(id)sender
+
+{
+    
+    NSLog(@"Refreshing");
+    
+    [[WeatherManager sharedManager] findCurrentLocation];
+    
+    [(UIRefreshControl *) sender endRefreshing];
+    
+}
+
 
 -(UIStatusBarStyle)preferredStatusBarStyle
 
@@ -223,12 +242,12 @@
         }
     }
     
-    else if (indexPath.section ==1) {
-        if (indexPath.row ==0) {
+    else if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
             [self configureHeaderCell:cell title:@"Daily Forecast"];
         }
         else {
-            Conditions *weather = [WeatherManager sharedManager].dailyForecast[indexPath.row -1];
+            Conditions *weather = [WeatherManager sharedManager].dailyForecast[indexPath.row - 1];
             [self configureDailyCell:cell weather:weather];
         }
     }
@@ -256,15 +275,14 @@
 
 }
 
--(void)configureDailyCell:(UITableViewCell *)cell weather:(Conditions *)weather
-{
-    
+- (void)configureDailyCell:(UITableViewCell *)cell weather:(Conditions *)weather {
+   
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium"  size:18];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
     cell.textLabel.text = [self.dayFormatter stringFromDate:weather.date];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f° / %.0f°", weather.tempHigh.floatValue, weather.tempLow.floatValue];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f° / %.0f°",weather.tempHigh.floatValue,weather.tempLow.floatValue];
     cell.imageView.image = [UIImage imageNamed:[weather imageName]];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
 }
 

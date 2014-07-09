@@ -11,13 +11,12 @@
 @implementation DailyForecast
 
 
-+(NSDictionary *)JSONKeyPathsByPropertyKey
-{
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
     
-    NSMutableDictionary *paths =[[super JSONKeyPathsByPropertyKey] mutableCopy];
-    paths[@"highTemp"] = @"temp.max";
-    paths[@"lowTemp"] = @"temp.min";
     
+    NSMutableDictionary *paths = [[super JSONKeyPathsByPropertyKey] mutableCopy];
+    paths[@"tempHigh"] = @"temp.max";
+    paths[@"tempLow"] = @"temp.min";
     return paths;
     
 }
