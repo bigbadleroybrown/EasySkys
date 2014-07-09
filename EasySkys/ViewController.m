@@ -42,6 +42,7 @@
     self.screenHeight = [UIScreen mainScreen].bounds.size.height;
     UIImage *background = [UIImage imageNamed:@"nycbg@2x"];
     
+    
     self.backgroundImageView = [[UIImageView alloc]initWithImage:background];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:self.backgroundImageView];
