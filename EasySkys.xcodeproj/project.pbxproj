@@ -48,6 +48,7 @@
 		2E93FE9819631AAF0057C4CD /* weather-snow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E93FE8019631AAF0057C4CD /* weather-snow@2x.png */; };
 		2E93FE9919631AAF0057C4CD /* weather-tstorm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E93FE8119631AAF0057C4CD /* weather-tstorm.png */; };
 		2E93FE9A19631AAF0057C4CD /* weather-tstorm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E93FE8219631AAF0057C4CD /* weather-tstorm@2x.png */; };
+		2E93FEA0196DBBA30057C4CD /* homebackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E93FE9F196DBBA30057C4CD /* homebackground.png */; };
 		2EE4955F19620E35006FA552 /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4955E19620E35006FA552 /* WeatherManager.m */; };
 		2EE4956219620E57006FA552 /* Conditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4956119620E57006FA552 /* Conditions.m */; };
 		2EE4956519620F1B006FA552 /* DailyForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4956419620F1B006FA552 /* DailyForecast.m */; };
@@ -113,6 +114,7 @@
 		2E93FE8019631AAF0057C4CD /* weather-snow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-snow@2x.png"; sourceTree = "<group>"; };
 		2E93FE8119631AAF0057C4CD /* weather-tstorm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-tstorm.png"; sourceTree = "<group>"; };
 		2E93FE8219631AAF0057C4CD /* weather-tstorm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-tstorm@2x.png"; sourceTree = "<group>"; };
+		2E93FE9F196DBBA30057C4CD /* homebackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homebackground.png; sourceTree = "<group>"; };
 		2EE4955D19620E35006FA552 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
 		2EE4955E19620E35006FA552 /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
 		2EE4956019620E57006FA552 /* Conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conditions.h; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				2E93FE9B19631E6E0057C4CD /* Weather Icons */,
 				2E935EE91961E32C00ADD2B6 /* nycbg@2x.png */,
+				2E93FE9F196DBBA30057C4CD /* homebackground.png */,
 				2E935EEA1961E32C00ADD2B6 /* nycSmallbg.png */,
 			);
 			name = Images;
@@ -377,6 +380,7 @@
 				2E93FE8E19631AAF0057C4CD /* weather-moon@2x.png in Resources */,
 				2E93FE9519631AAF0057C4CD /* weather-shower.png in Resources */,
 				2E93FE9719631AAF0057C4CD /* weather-snow.png in Resources */,
+				2E93FEA0196DBBA30057C4CD /* homebackground.png in Resources */,
 				2E93FE9819631AAF0057C4CD /* weather-snow@2x.png in Resources */,
 				2E93FE8319631AAF0057C4CD /* weather-broken.png in Resources */,
 				2E93FE8D19631AAF0057C4CD /* weather-moon.png in Resources */,

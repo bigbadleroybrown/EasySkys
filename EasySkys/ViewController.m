@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     self.screenHeight = [UIScreen mainScreen].bounds.size.height;
-    UIImage *background = [UIImage imageNamed:@"nycbg@2x"];
+    UIImage *background = [UIImage imageNamed:@"nycbg@2x.png"];
     
     
     self.backgroundImageView = [[UIImageView alloc]initWithImage:background];
@@ -74,7 +74,7 @@
     CGFloat hiloHeight = 40;
     CGFloat iconHeight = 30;
     
-    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height - hiloHeight, headerFrame.size.width - 2*inset, hiloHeight);;
+    CGRect hiloFrame = CGRectMake(inset, headerFrame.size.height - hiloHeight, headerFrame.size.width - 2*inset, hiloHeight);
     
     CGRect temperatureFrame = CGRectMake(inset, headerFrame.size.height - temperatureHeight - hiloHeight, headerFrame.size.width - 2*inset, temperatureHeight);
     
@@ -103,22 +103,22 @@
     hiloLabel.backgroundColor = [UIColor clearColor];
     hiloLabel.textColor = [UIColor whiteColor];
     hiloLabel.text = @"0° / 0°";
-    hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:28];
+    hiloLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [header addSubview:hiloLabel];
     
     //this is the top city label
-    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 30)];
+    UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width, 40)];
     cityLabel.backgroundColor = [UIColor clearColor];
     cityLabel.textColor = [UIColor whiteColor];
     cityLabel.text = @"Loading...";
-    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30];
     cityLabel.textAlignment = NSTextAlignmentCenter;
     [header addSubview:cityLabel];
     
     //this will also be up top
     UILabel *conditionsLabel = [[UILabel alloc] initWithFrame:conditionsFrame];
     conditionsLabel.backgroundColor = [UIColor clearColor];
-    conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
+    conditionsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:40];
     conditionsLabel.textColor = [UIColor whiteColor];
     [header addSubview:conditionsLabel];
     
@@ -148,7 +148,7 @@
         RACObserve([WeatherManager sharedManager], currentCondition.tempHigh),
         RACObserve([WeatherManager sharedManager], currentCondition.tempLow)]
                 reduce:^(NSNumber *hi, NSNumber *low) {
-                    return [NSString  stringWithFormat:@"%.0f° / %.0f°",hi.floatValue,low.floatValue];
+                    return [NSString  stringWithFormat:@"High: %.0f° / Low: %.0f°",hi.floatValue,low.floatValue];
                 }]
                 deliverOn:RACScheduler.mainThreadScheduler];
     

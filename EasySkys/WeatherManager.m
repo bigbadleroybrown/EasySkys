@@ -64,6 +64,8 @@
     if (self = [super init]) {
 
         _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+        //_locationManager.distanceFilter = 3000;
         _locationManager.delegate = self;
         
 
@@ -107,7 +109,7 @@
     
 
     if (location.horizontalAccuracy > 0) {
-        // 3
+      
         self.currentLocation = location;
         [self.locationManager stopUpdatingLocation];
     }
